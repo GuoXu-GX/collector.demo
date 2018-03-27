@@ -59,6 +59,19 @@ if __name__ == '__main__':
     ret = ecs.run_task(
         cluster=cluster_name,
         taskDefinition=cluster_name,
+        overrides={
+            'containerOverrides': [
+                {
+                    'name': 'python',
+                    'environment': [
+                        {
+                            'name': 'DATA_CLOUD_USE_CONSUL',
+                            'value': 'true'
+                        },
+                    ]
+                }
+            ]
+        },
         count=1,
         launchType='FARGATE',
         startedBy=datetime.utcnow().strftime("%Y-%m-%d_%H-%M-%S.%f_UTC"),
@@ -73,13 +86,13 @@ if __name__ == '__main__':
     )
     #print(ret)
 
-    print('\nwaiting task to finish...')
+    print('\n%s: waiting task to finish...' % datetime.now().strftime("%H:%M:%S.%f"))
     tick0 = time.time()
     arn = ret["tasks"][0]['taskArn']
     waiter = ecs.get_waiter('tasks_stopped')
     waiter.wait(cluster=cluster_name, tasks=[arn])
     tick1 = time.time()
-    print('running task takes %f secs' % (tick1 - tick0))
+    print('%s: running task takes %f secs' % (datetime.now().strftime("%H:%M:%S.%f"), (tick1 - tick0)))
 
     print('\ndeleteing task definition...')
     ret = ecs.deregister_task_definition(taskDefinition='%s:1' % cluster_name)

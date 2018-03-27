@@ -9,7 +9,7 @@ if __name__ == '__main__':
     args = sys.argv[1:]
 
     if len(args) < 3:
-        print('%s: bucket prefix [domain]' % sys.argv[0])
+        print('%s bucket prefix [domain]' % sys.argv[0])
         sys.exit(-1)
 
     bucket_name = args[0]
