@@ -37,7 +37,8 @@ if __name__ == '__main__':
     os.system(docker_login)
 
     print('\nbuilding docker image...')
-    os.system('sudo -E bash build.sh %s' % image_name)
+    os.system('sudo -E bash build.sh %s --no-cache' % image_name)
+    #os.system('sudo -E bash build.sh %s' % image_name)
 
     print('\ntagging docker image...')
     endpoint = auth_info['proxyEndpoint'].replace('https://', '')

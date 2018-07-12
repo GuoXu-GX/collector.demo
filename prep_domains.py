@@ -56,5 +56,5 @@ if __name__ == '__main__':
     print('\tlocal/s3 files are equal: ', filecmp.cmp(temp_path, temp_path + '.1'))
 
     print('\ndelete temp file:')
-    os.remove(temp_path)
+    #os.remove(temp_path)
     os.remove(temp_path + '.1')
